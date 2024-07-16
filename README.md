@@ -146,6 +146,7 @@ The server records detailed information about each upload in the `upload.log` fi
 ```makefile
 1. The size limit for a single file upload is 20MB.
 2. The upload path /upload should be consistent with the file upload path in the server configuration file.
+3. Do not upload important files, because they will be published.
 ```
 
 ### Example Code
