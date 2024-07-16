@@ -1,4 +1,4 @@
-# Free Upload API
+# Free Upload file API with fast CDN
 ## [中文](https://github.com/superggfun/uploadAPI/blob/main/README_zh-cn.md)
 
 ## Project Description
