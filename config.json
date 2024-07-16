@@ -1,0 +1,7 @@
+{
+    "port": "8080",
+    "uploadPath": "/upload",
+    "maxConcurrentUploads": 100,
+    "maxUploadSizeMB": 20,
+    "uploadTimeout": 1
+}
