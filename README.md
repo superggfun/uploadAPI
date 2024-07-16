@@ -1,5 +1,5 @@
 # Free Upload API
-## [中文](http://example.com)
+## [中文](https://github.com/superggfun/uploadAPI/blob/main/README_zh-cn.md)
 
 ## Project Description
 
