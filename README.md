@@ -1,5 +1,5 @@
 # Free Upload API
-##[中文](http://example.com)
+## [中文](http://example.com)
 
 ## Project Description
 
