@@ -1,14 +1,29 @@
-## 文件上传API接口文档
+# Free Upload API
+
+## Project Description
+
+Free Upload API is a free file hosting solution. This is the server part of the system.
+
+## Installation Instructions
+
+- Download the corresponding files from the `release` section on GitHub along with the `config.json`.
+- The system is ready to use right out of the box, no further setup is needed.
+
+## Usage
+
+For usage instructions, please refer to the README.md file included in the download.
+
+## File Upload API Documentation
 
 **URL:** /upload
 
-**方法:** POST
+**Method:** POST
 
-**描述:** 上传文件到服务器。
+**Description:** Uploads files to the server.
 
-### 配置文件
+### Configuration File
 
-API的配置通过 `config.json` 文件进行管理，示例如下：
+The API's configuration is managed through the `config.json` file, an example is as follows:
 
 ```json
 {
@@ -20,31 +35,33 @@ API的配置通过 `config.json` 文件进行管理，示例如下：
 }
 ```
 
-#### 配置文件参数
-| 参数名               | 类型   | 描述                             |
-| -------------------- | ------ | -------------------------------- |
-| port                 | string | 服务器监听的端口                 |
-| uploadPath           | string | 文件上传的路径                   |
-| maxConcurrentUploads | int    | 最大并发上传数                   |
-| maxUploadSizeMB      | int    | 表单的最大上传大小（以MB为单位） |
-| uploadTimeout        | int    | 上传超时时间（以秒为单位）       |
+#### Configuration File Parameters
+
+| Parameter Name       | Type   | Description                          |
+| -------------------- | ------ | ------------------------------------ |
+| port                 | string | The port on which the server listens |
+| uploadPath           | string | The path where files are uploaded    |
+| maxConcurrentUploads | int    | Maximum number of concurrent uploads |
+| maxUploadSizeMB      | int    | Maximum upload size per form (in MB) |
+| uploadTimeout        | int    | Upload timeout (in seconds)          |
 
 
-### 请求头
+### Request Headers
 
 | Key          | Value               |
 | ------------ | ------------------- |
 | Content-Type | multipart/form-data |
 
-### 请求参数
+### Request Parameters
 
-请求应包含一个或多个文件，使用 `multipart/form-data` 编码方式上传。
+The request should include one or more files, uploaded using `multipart/form-data` encoding.
 
-| 参数名     | 类型 | 必填 | 描述         |
-| ---------- | ---- | ---- | ------------ |
-| uploadFile | file | 是   | 要上传的文件 |
+| Parameter Name | Type | Required | Description    |
+| -------------- | ---- | -------- | -------------- |
+| uploadFile     | file | 是       | File to upload |
 
-### 示例请求
+### Sample Request
+
 ```bash
 curl -X POST http://localhost:8080/upload \
   -F "uploadFile=@path/to/your/file1" \
@@ -52,7 +69,7 @@ curl -X POST http://localhost:8080/upload \
 ```
 
 
-### 成功响应
+### Successful Response
 
 ```json
 [
@@ -82,7 +99,7 @@ curl -X POST http://localhost:8080/upload \
 
 ```
 
-### 失败响应
+### Failure Response
 
 ```json
 [
@@ -100,59 +117,59 @@ curl -X POST http://localhost:8080/upload \
 ]
 ```
 
-### 错误码
+### Error Codes
 
-| success | code |                      errMsg                      |
-| :-----: | :--: | :----------------------------------------------: |
-|  true   | 200  |                                                  |
-|  false  | 400  | 请求无效，通常由于表单解析失败或文件读取错误引起 |
-|  false  | 413  |        上传的文件大小超过了配置的最大限制        |
-| falses  | 429  | 服务器繁忙，当前并发上传数量超过了配置的最大限制 |
-|  false  | 500  |                  文件不符合要求                  |
-|  false  | 501  |    分片上传文件参数校验失败，文件信息不能为空    |
-|  false  | 502  |                   文件校验失败                   |
-|  false  |  7   |                     未知错误                     |
+| success | code |                            errMsg                            |
+| :-----: | :--: | :----------------------------------------------------------: |
+|  true   | 200  |                                                              |
+|  false  | 400  | Invalid request, usually due to form parsing failure or file read error |
+|  false  | 413  |   Uploaded file size exceeds the configured maximum limit    |
+|  false  | 429  | Server is busy, current number of concurrent uploads exceeds the configured limit |
+|  false  | 500  |               File does not meet requirements                |
+|  false  | 501  | Fragmented upload file parameter validation failed, file information cannot be empty |
+|  false  | 502  |                    File validation failed                    |
+|  false  |  7   |                        Unknown error                         |
 
-### 支持的文件格式
+### Supported File Formats
 
 ```makefile
 .txt, .png, .jpg, .jpeg, .pdf, .docx, .mp3, .mp4, .jpeg, .zip, .apk, .ts, .m3u8
 ```
 
-### 日志
+### Logs
 
-服务器会在 `upload.log` 文件中记录每次上传的详细信息，包括客户端IP、上传文件名和上传路径。
+The server records detailed information about each upload in the `upload.log` file, including client IP, uploaded file name, and upload path.
 
-### 注意事项
+### Considerations
 
 ```makefile
-1. 上传单个文件的大小限制为 20MB。
-2. 上传路径 /upload 应与服务器配置文件中的文件上传的路径一致。
+1. The size limit for a single file upload is 20MB.
+2. The upload path /upload should be consistent with the file upload path in the server configuration file.
 ```
 
-### 示例代码
+### Example Code
 
 #### Python
 
 ```python
 import requests
 
-# 文件路径列表
+# List of file paths
 file_paths = ["path/to/your/file1.txt", "path/to/your/file2.txt"]
-# 上传地址
+# Upload URL
 upload_url = "http://localhost:8080/upload"
 
-# 上传文件函数
+# Function to upload files
 def upload_files(file_paths):
     for file_path in file_paths:
         with open(file_path, 'rb') as file:
-            # 创建表单数据
+            # Create form data
             files = {'uploadFile': file}
 
-            # 发送POST请求
+            # Send POST request
             response = requests.post(upload_url, files=files)
 
-            # 打印响应
+            # Print response
             if response.status_code == 200:
                 response_data = response.json()
                 for result in response_data:
@@ -170,9 +187,10 @@ def upload_files(file_paths):
                 print(f"Failed to upload file. Status code: {response.status_code}")
                 print(f"Response: {response.text}")
 
-# 执行文件上传
+# Execute file upload
 upload_files(file_paths)
-
 ```
-### 反馈与支持
-如果您在使用过程中遇到问题或有任何建议，请联系开发团队
+
+### Feedback and Support
+
+If you encounter any issues or have suggestions during use, please contact the development team.
