@@ -59,7 +59,7 @@ The request should include one or more files, uploaded using `multipart/form-dat
 
 | Parameter Name | Type | Required | Description    |
 | -------------- | ---- | -------- | -------------- |
-| uploadFile     | file | 是       | File to upload |
+| uploadFile     | file | yes       | File to upload |
 
 ### Sample Request
 
